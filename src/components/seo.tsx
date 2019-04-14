@@ -2,21 +2,32 @@ import { graphql, StaticQuery } from 'gatsby'
 import * as React from 'react'
 import Helmet from 'react-helmet'
 
+interface Meta {
+  content: string
+  property: string
+}
+
 interface SEOProps {
   description?: string
   lang?: string
-  meta?: any[]
+  meta?: Meta[]
   keywords?: string[]
   title: string
 }
 
-const SEO: React.SFC<SEOProps> = ({
-  description,
-  lang,
-  meta,
-  keywords,
-  title,
-}): JSX.Element => (
+const detailsQuery = graphql`
+  query DefaultSEOQuery {
+    site {
+      siteMetadata {
+        title
+        description
+        author
+      }
+    }
+  }
+`
+
+const SEO: React.SFC<SEOProps> = ({ description, lang, meta, keywords, title }): JSX.Element => (
   <StaticQuery
     query={detailsQuery}
     render={data => {
@@ -29,6 +40,10 @@ const SEO: React.SFC<SEOProps> = ({
           title={title}
           titleTemplate={`%s | ${data.site.siteMetadata.title}`}
           meta={[
+            {
+              content: 'width=device-width, initial-scale=1.0',
+              name: 'viewport',
+            },
             {
               content: metaDescription,
               name: 'description',
@@ -68,7 +83,7 @@ const SEO: React.SFC<SEOProps> = ({
                     content: keywords.join(', '),
                     name: 'keywords',
                   }
-                : []
+                : [],
             )
             .concat(meta)}
         />
@@ -84,15 +99,3 @@ SEO.defaultProps = {
 }
 
 export default SEO
-
-const detailsQuery = graphql`
-  query DefaultSEOQuery {
-    site {
-      siteMetadata {
-        title
-        description
-        author
-      }
-    }
-  }
-`

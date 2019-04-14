@@ -1,9 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Typescript Starter Blog',
-    description:
-      'Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.',
-    author: '@gatsbyjs',
+    title: 'Excursion in Distraction',
+    description: 'mostly software related ramblings',
+    author: '@dsvensson',
   },
   plugins: [
     {
@@ -14,21 +13,11 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/content/assets`,
-        name: 'assets',
-      },
-    },
-    {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
           {
             resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 500,
-            },
           },
           {
             resolve: 'gatsby-remark-external-links',
@@ -37,12 +26,50 @@ module.exports = {
               rel: 'nofollow noopener noreferrer',
             },
           },
-          `gatsby-remark-responsive-iframe`,
+          {
+            resolve: 'gatsby-remark-better-embed-video',
+            options: {
+              width: 654,
+              height: 370,
+              ratio: 1.77,
+              related: false,
+              noIframeBorder: true,
+              showInfo: false,
+            },
+          },
+          {
+            resolve: 'gatsby-remark-smartypants',
+            options: {
+              dashes: 'oldschool',
+            },
+          },
+          'gatsby-remark-copy-linked-files',
+          'gatsby-remark-responsive-iframe',
+          'gatsby-remark-prismjs',
+          'gatsby-remark-reading-time',
+          {
+            resolve: 'gatsby-remark-emojis',
+            options: {
+              active: true,
+              class: 'emoji-icon',
+              size: 64,
+              styles: {
+                display: 'inline',
+                margin: '0',
+                'margin-top': '1px',
+                position: 'relative',
+                top: '5px',
+                width: '25px',
+              },
+            },
+          },
         ],
       },
     },
     'gatsby-plugin-typescript',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-styled-components',
+    //'gatsby-plugin-sass',
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -52,18 +79,26 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-react-svg',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
+        name: 'Excursion in Distraction',
+        short_name: 'Excursion in Distraction',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#cc0000',
+        theme_color: '#cc0000',
         display: 'minimal-ui',
-        icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+        icon: 'src/images/dopefish.gif', // This path is relative to the root of the site.
       },
     },
     'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: 'src/typography',
+        omitGoogleFont: true,
+      },
+    },
   ],
 }
