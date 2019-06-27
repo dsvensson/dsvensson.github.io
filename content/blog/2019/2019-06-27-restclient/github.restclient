@@ -1,0 +1,28 @@
+# -*- restclient -*-
+
+:graphql-url = https://api.github.com/graphql
+
+:github-token := (auth-source-pass-get "token" "web/github")
+
+:headers = <<
+Authorization: Bearer :github-token
+User-Agent: Emacs
+#
+
+:query-repositories := <<
+(graphql-query
+ ((viewer
+   (repositories
+    :arguments
+    ((first . 3)
+     (orderBy . ((direction . DESC)
+                 (field     . UPDATED_AT))))
+    (nodes
+     name
+     pushedAt)))))
+#
+
+# Fetch repositories
+POST :graphql-url
+:headers
+{ "query": ":query-repositories"}
